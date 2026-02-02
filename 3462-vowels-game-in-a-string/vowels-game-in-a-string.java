@@ -1,13 +1,8 @@
 class Solution {
     public boolean doesAliceWin(String s) {
-        int c= 0;
-        String vow = "aeiou";
         for(char v:s.toCharArray()){
-            if(vow.contains(String.valueOf(v))){
-                c+=1;
-                break;
-            }
+            if(v=='a'||v=='e'||v=='i'||v=='o'||v=='u')return true;
         }
-        return c>0;
+        return false;
     }
 }
