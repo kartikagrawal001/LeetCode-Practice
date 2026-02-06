@@ -4,12 +4,15 @@ class Solution {
         int i=0;
         int j=0;
         int maxLen= 0;
-        while(i<nums.length && j<nums.length && i<=j){
-            if((long)nums[j]<= (long)nums[i]*k){
-                maxLen = Math.max(maxLen,j-i+1);
-                j++;
+        while(j<nums.length){
+            long min = nums[i];
+            long max = nums[j];
+            while(i<j && max>min*k){
+                i++;
+                min = nums[i];
             }
-            else i++;
+            maxLen = Math.max(maxLen,j-i+1);
+            j++;
         }
         return nums.length-maxLen;
     }
