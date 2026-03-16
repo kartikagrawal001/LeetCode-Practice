@@ -2,7 +2,9 @@ import java.util.*;
 
 class Solution {
     public int[] getBiggestThree(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
+        int m = grid.length;
+        int n = grid[0].length;
+
         TreeSet<Integer> set = new TreeSet<>(Collections.reverseOrder());
 
         for (int i = 0; i < m; i++) {
@@ -10,24 +12,23 @@ class Solution {
 
                 set.add(grid[i][j]);
 
-                int maxSize = Math.min(Math.min(i, m - 1 - i), Math.min(j, n - 1 - j));
+                for (int k = 1; i - k >= 0 && i + k < m && j - k >= 0 && j + k < n; k++) {
 
-                for (int k = 1; k <= maxSize; k++) {
                     int sum = 0;
 
                     int r = i - k, c = j;
 
-                    for (int d = 0; d < k; d++)
-                        sum += grid[r + d][c + d];
+                    for (int t = 0; t < k; t++)
+                        sum += grid[r + t][c + t];
 
-                    for (int d = 0; d < k; d++)
-                        sum += grid[i + d][j + k - d];
+                    for (int t = 0; t < k; t++)
+                        sum += grid[r + k + t][c + k - t];
 
-                    for (int d = 0; d < k; d++)
-                        sum += grid[i + k - d][j - d];
+                    for (int t = 0; t < k; t++)
+                        sum += grid[r + 2 * k - t][c - t];
 
-                    for (int d = 0; d < k; d++)
-                        sum += grid[i - d][j - k + d];
+                    for (int t = 0; t < k; t++)
+                        sum += grid[r + k - t][c - k + t];
 
                     set.add(sum);
                 }
@@ -36,10 +37,10 @@ class Solution {
 
         int size = Math.min(3, set.size());
         int[] ans = new int[size];
-
         int idx = 0;
+
         for (int val : set) {
-            if (idx == 3) break;
+            if (idx == size) break;
             ans[idx++] = val;
         }
 
