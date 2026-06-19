@@ -3,11 +3,12 @@ class Solution {
         int n = gain.length;
         int arr[] = new int[n+1];
         int sum = 0;
+        int max = 0;
         for(int i=0;i<n;i++){
             sum+=gain[i];
             arr[i+1] = sum;
+            max = Math.max(max,sum);
         }
-        Arrays.sort(arr);
-        return arr[n];
+        return max;
     }
 }
