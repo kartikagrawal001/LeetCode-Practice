@@ -6,7 +6,7 @@ class Solution {
         for(int[] row:grid){
             for(int c:row){
                 sum+=c;
-                if(st.contains(c) && rep==0)rep=c;
+                if(st.contains(c) )rep=c;
                 st.add(c);
             }
         }
