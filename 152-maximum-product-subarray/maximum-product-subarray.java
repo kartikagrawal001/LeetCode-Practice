@@ -9,7 +9,7 @@ class Solution {
             int v3 = minEnding*nums[i];
             maxEnding = Math.max(v1,Math.max(v2,v3));
             minEnding = Math.min(v1,Math.min(v2,v3));
-            ans = Math.max(ans,Math.max(maxEnding,minEnding));
+            ans = Math.max(ans,maxEnding);
         }
         return ans;
     }
