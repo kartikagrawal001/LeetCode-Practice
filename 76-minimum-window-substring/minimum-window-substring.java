@@ -1,32 +1,29 @@
 class Solution {
-    public boolean matched(HashMap<Character,Integer> map1,HashMap<Character,Integer> map2){
-        for (Character key : map1.keySet()) {
-            if (map2.getOrDefault(key, 0) < map1.get(key)) {
-                return false;
-            }
+    public boolean valid(int[]arr1,int arr2[]){
+        for(int i=0;i<128;i++){
+            if(arr2[i]<arr1[i])return false;
         }
         return true;
     }
     public String minWindow(String s, String t) {
-        int min = Integer.MAX_VALUE;
-        int low = 0;
-        HashMap<Character,Integer> map1 = new HashMap<>();
-        for(char ch:t.toCharArray()){
-            map1.put(ch,map1.getOrDefault(ch,0)+1);
+        int[]arr1 = new int[128];
+        int[]arr2 = new int[128];
+        for(char c:t.toCharArray()){
+            arr1[c]++;
         }
-        HashMap<Character,Integer> map2 = new HashMap<>();
+        int low = 0;
+        int min = Integer.MAX_VALUE;
         String ans = "";
         for(int high = 0;high<s.length();high++){
             char c = s.charAt(high);
-            map2.put(c,map2.getOrDefault(c,0)+1);
-            while(matched(map1,map2)){
-                int l = high-low+1;
-                if(l<min){
-                    min = Math.min(min,l);
+            arr2[c]++;
+            while(valid(arr1,arr2)){
+                if(high-low+1<min){
                     ans = s.substring(low,high+1);
+                    min = high-low+1;
                 }
-                char ch = s.charAt(low);
-                map2.put(ch,map2.getOrDefault(ch,0)-1);
+                char c2 = s.charAt(low);
+                arr2[c2]--;
                 low++;
             }
         }
