@@ -16,7 +16,7 @@ class Solution {
                 list.add(new int[]{a,b});
             }
             else if(s2<=s1 && e2>=s1){
-                int a = Math.max(s1,s1);
+                int a = Math.max(s1,s2);
                 int b = Math.min(e1,e2);
                 list.add(new int[]{a,b});
             }
