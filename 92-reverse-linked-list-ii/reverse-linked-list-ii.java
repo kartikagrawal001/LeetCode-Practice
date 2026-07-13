@@ -1,60 +1,39 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-
-        if(head == null || left == right) return head;
-
-        ListNode l = null;
-        if(left > 1){
-            l = head;
-            int c1 = 1;
-            while(c1 < left - 1){
-                l = l.next;
-                c1++;
-            }
+        if(head==null||head.next==null||left==right)return head;
+        ListNode part1 = null;
+        ListNode t = head; 
+        int pos = 1;
+        while(pos<left && t!=null){
+            part1 = t;
+            t = t.next;
+            pos++;
         }
-
-        ListNode r = head;
-        int c2 = 1;
-        while(c2 < right){
-            r = r.next;
-            c2++;
-        }
-
-        ListNode lsave = l;
-        ListNode rsave = r.next;
-        r.next = null;
-
-        ListNode midhead;
-        if(l == null){
-            midhead = head;
-        }else{
-            midhead = l.next;
-            l.next = null;
-        }
-
         ListNode prev = null;
-        ListNode curr = midhead;
-
-        while(curr != null){
-            ListNode next = curr.next;
+        ListNode curr = t;
+        int count = right-left+1;
+        while(count>0){
+            ListNode next  = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
+            count--;
         }
-
-        if(lsave != null){
-            lsave.next = prev;
-        }else{
-            head = prev;
+        t.next = curr;
+        if(part1!=null){
+            part1.next = prev;
+            return head;
         }
-
-        ListNode tem = head;
-        while(tem.next != null){
-            tem = tem.next;
-        }
-
-        tem.next = rsave;
-
-        return head;
+        return prev;
     }
 }
