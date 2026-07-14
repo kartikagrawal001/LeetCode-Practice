@@ -1,55 +1,60 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
-
-    public ListNode reverse(ListNode head, int times) {
+    public ListNode swapPairs(ListNode head) {
         ListNode prev = null;
-        ListNode curr = head;
-
-        while (times > 0 && curr != null) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-            times--;
+        if (head == null) {
+            return null;
         }
+        ListNode left = head;
+        ListNode right = left;
+        ListNode prevLeft = null;
+        ListNode nextLeft = null;
+        ListNode res = null;
+        int size = 2;
+        while (left != null) {
+            right=left;
+            for (int i = 0; i < size - 1; i++) {
+                if (right == null)break;
+                else right = right.next;    
+            }
+            if (right != null) {
 
-        head.next = curr;
-        return prev;
+                nextLeft = right.next;
+                reverse(left, size);
+                if (prevLeft != null) {
+                    prevLeft.next = right;
+                }
+                if (res == null) {
+                    res = right;
+                }
+                prevLeft = left;
+                left = nextLeft;
+            }
+
+            else {
+                if (prevLeft != null) {
+                    prevLeft.next = left;
+                }
+                 if (res == null) {
+                        res = left;
+                    }   
+                break;
+            }
+
+        }
+        return res;
+
     }
 
-    public ListNode swapPairs(ListNode head) {
-        if (head == null || head.next == null)
-            return head;
-
-        ListNode left = head;
-        ListNode prevleft = null;
-        ListNode res = null;
-
-        while (left != null && left.next != null) {
-
-            ListNode nextleft = left.next.next;
-
-            ListNode newHead = reverse(left, 2);
-
-            if (prevleft != null)
-                prevleft.next = newHead;
-
-            if (res == null)
-                res = newHead;
-
-            prevleft = left;
-            left = nextleft;
+    public void reverse(ListNode head, int size) {
+        ListNode prev = null;
+        ListNode current = head;
+        int times = size;
+        while (times > 0 && current != null) {
+            ListNode nex = current.next;
+            current.next = prev;
+            prev = current;
+            current = nex;
+            times--;
         }
-
-        return res;
     }
 }
