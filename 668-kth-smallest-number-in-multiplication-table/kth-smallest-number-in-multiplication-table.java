@@ -5,7 +5,7 @@ class Solution {
 
         for (int i = 1; i <= m; i++) {
             sum += Math.min(n, guess / i);
-            if (sum >= k) return true;   // early exit
+            if (sum >= k) return true;
         }
 
         return false;
