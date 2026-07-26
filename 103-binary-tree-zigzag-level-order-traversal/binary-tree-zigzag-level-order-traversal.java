@@ -20,24 +20,19 @@ class Solution {
         if(root==null)return ans;
         q.offer(root);
         boolean f = true;
+        int lev = 0;
         while(!q.isEmpty()){
-            List<Integer> list = new ArrayList<>();
+            LinkedList<Integer> list = new LinkedList<>();
             int levelsize = q.size();
             for(int i=0;i<levelsize;i++){
                 if(q.peek().left!=null)q.add(q.peek().left);
                 if(q.peek().right!=null)q.add(q.peek().right);
-                list.add(q.peek().val);
+                if(lev%2==0)list.add(q.peek().val);
+                else list.addFirst(q.peek().val);
                 q.poll();
             }
-            if(f){
-                ans.add(list);
-                f = false;
-            }
-            else {
-                Collections.reverse(list);
-                ans.add(list);
-                f = true;
-            }
+            lev++;
+            ans.add(list);
         }
         return ans;
     }
