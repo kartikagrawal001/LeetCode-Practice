@@ -14,24 +14,15 @@
  * }
  */
 class Solution {
-    int currsum= 0;
-    ArrayList<Integer> ans = new ArrayList<>();
     public int sumNumbers(TreeNode root) {
-        helper(root);
-        int sum = 0;
-        for(int v:ans)sum+=v;
-        return sum;
+        return helper(root,0);
     }
-    public void helper(TreeNode root){
-        if(root==null)return;
-        currsum = currsum * 10 + root.val;
-        if(root.left==null && root.right==null){
-            ans.add(currsum);
-            currsum /= 10;
-            return;
-        }
-        helper(root.left);
-        helper(root.right);
-        currsum /= 10;
+    public int helper(TreeNode root,int n){
+        if(root==null)return 0;
+        n = n*10 + root.val;
+        if(root.left==null && root.right==null)return n;
+        int l = helper(root.left,n);
+        int r = helper(root.right,n);
+        return l + r;
     }
 }
