@@ -14,28 +14,14 @@
  * }
  */
 class Solution {
-    List<TreeNode> list = new ArrayList<>();
+    TreeNode prev = null;
+    TreeNode g1first = null;
+    TreeNode g1sec = null;
+    TreeNode g2first = null;
+    TreeNode g2sec = null;
+    int g = 0;
     public void recoverTree(TreeNode root) {
-        if(root==null)return;
         inorder(root);
-        TreeNode g1first = null;
-        TreeNode g1sec= null;
-        TreeNode g2first = null;
-        TreeNode g2sec = null;
-        int g = 0;
-        for(int i=1;i<list.size();i++){
-            if(list.get(i).val<=list.get(i-1).val){
-                if(g==0){
-                    g1first = list.get(i-1);
-                    g1sec = list.get(i);
-                }
-                else{
-                    g2first = list.get(i-1);
-                    g2sec = list.get(i);
-                }
-                g++;
-            }
-        }
         if(g==1){
             int temp = g1first.val;
             g1first.val = g1sec.val;
@@ -50,7 +36,21 @@ class Solution {
     public void inorder(TreeNode root){
         if(root==null)return;
         inorder(root.left);
-        list.add(root);
+        if(prev==null)prev = root;
+        else{
+            if(root.val<=prev.val){
+                if(g==0){
+                    g1first = prev;
+                    g1sec = root;
+                }
+                else{
+                    g2first = prev;
+                    g2sec = root;
+                }
+                g++;
+            }   
+            prev = root;
+        }
         inorder(root.right);
     }
-}
+} 
