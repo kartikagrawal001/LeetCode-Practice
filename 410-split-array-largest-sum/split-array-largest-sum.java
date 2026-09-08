@@ -1,34 +1,33 @@
 class Solution {
-    public boolean ispossible(int[]nums,int k, int guess){
-        int count = 1;
-        int sum = guess;
+    public boolean possible(int guess,int[]nums,int k){
+        int c = 1;
+        int sum = 0;
         for(int v:nums){
-            if(v<=sum)sum-=v;
+            if(sum+v<=guess)sum+=v;
             else{
-                count++;
-                sum = guess;
-                sum-=v;
+                c++;
+                sum = v;
             }
         }
-        if(count<=k)return true;
-        return false;
+        if(c<=k)return true;
+        else return false;
     }
     public int splitArray(int[] nums, int k) {
         int low = 0;
         int high = 0;
         for(int v:nums){
             low = Math.max(v,low);
-            high+=v;
+            high += v;
         }
-        int ans = high;
         while(low<=high){
-            int mid = low+(high-low)/2;
-            if(ispossible(nums,k,mid)){
-                ans = mid;
-                high = mid-1;
+            int guess = low + (high-low)/2;
+            if(possible(guess,nums,k)){
+                high = guess-1;
             }
-            else low = mid+1;
+            else{
+                low = guess + 1;
+            }
         }
-        return ans;
+        return low;
     }
 }
